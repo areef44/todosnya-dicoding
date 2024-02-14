@@ -53,9 +53,53 @@ document.addEventListener('DOMContentLoaded', function(){
           isCompleted
         }
     }
+
+
+    
 });
+
+function makeTodo(todoObject){
+    // membuat text title dengan style h2
+    const textTitle = document.createElement('h2');
+    // menyematkan konten berupa teks
+    textTitle.innerText = todoObject.task;
+
+    // membuat text timestamp dengan style p
+    const textTimestamp = document.createElement('p');
+    // menyematkan konten berupa nilai timestamp
+    textTimestamp.innerText = todoObject.timeStamp;
+
+    // membuat element div
+    const textContainer = document.createElement('div');
+    // menambahkan text dengan class inner
+    textContainer.classList.add('inner');
+    // memasukkan text title dan textTimestamp
+    textContainer.append(textTitle, textTimestamp);
+
+    // membuat elemen div
+    const container = document.createElement('div');
+    // nambah class item dan shadow
+    container.classList.add('item', 'shadow');
+    // memasukan kedua text yaitu text title dan text timestamp kedalam class container
+    container.append(textContainer);
+    // lalu set attributnya id
+    container.setAttribute('id', `todo-${todoObject.id}`);
+
+    // return containernya
+    return container;
+}
 
 // event untuk menampilkan todos di console yang telah diinput kedalam memory
 document.addEventListener(RENDER_EVENT, function () {
     console.log(todos);
+    // membersihkan kontainer yang akan diisi agar tidak terjadi duplikasi data
+    const uncompletedTODOList = document.getElementById('todos');
+    uncompletedTODOList.innerHTML = '';
+
+    // iterasi data yang dibuat oleh make todos dan render ke todoElement
+    for (const todoItem of todos) {
+        const todoElement = makeTodo(todoItem);
+        // isi penampung yang kosong tadi
+        uncompletedTODOList.append(todoElement);
+    }
 });
