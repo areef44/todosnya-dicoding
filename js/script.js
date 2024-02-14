@@ -136,12 +136,47 @@ function findTodo(todoId) {
     return null;
 }
 
+// fungsi untuk menghapus dari container yang sudah dikerjakan
+function removeTaskFromCompleted(todoId) {
+    const todoTarget = findTodoIndex(todoId);
+   
+    if (todoTarget === -1) return;
+   
+    todos.splice(todoTarget, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+// menjadikan isCompleted nya menjadi false
+function undoTaskFromCompleted(todoId) {
+    const todoTarget = findTodo(todoId);
+   
+    if (todoTarget == null) return;
+   
+    todoTarget.isCompleted = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+// fungsi untuk menghapus todos
+function findTodoIndex(todoId) {
+    for (const index in todos) {
+      if (todos[index].id === todoId) {
+        return index;
+      }
+    }
+   
+    return -1;
+}
+
 // event untuk menampilkan todos di console yang telah diinput kedalam memory
 document.addEventListener(RENDER_EVENT, function () {
     console.log(todos);
     // membersihkan kontainer yang akan diisi agar tidak terjadi duplikasi data
     const uncompletedTODOList = document.getElementById('todos');
     uncompletedTODOList.innerHTML = '';
+
+    // membersihkan kontainer yang akan diisi agar tidak terjadi duplikasi data
+    const completedTODOList = document.getElementById('completed-todos');
+    completedTODOList.innerHTML = '';
 
     // iterasi data yang dibuat oleh make todos dan render ke todoElement
     for (const todoItem of todos) {
@@ -150,5 +185,7 @@ document.addEventListener(RENDER_EVENT, function () {
         if (!todoItem.isCompleted) {
             uncompletedTODOList.append(todoElement);
           }
+        else
+          completedTODOList.append(todoElement);
     }
 });
