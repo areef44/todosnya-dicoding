@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 });
 
-// event untuk menampilkan todos yang telah diinput kedalam memory
+// event untuk menampilkan todos di console yang telah diinput kedalam memory
 document.addEventListener(RENDER_EVENT, function () {
     console.log(todos);
 });
