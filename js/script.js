@@ -86,29 +86,41 @@ function makeTodo(todoObject){
     container.setAttribute('id', `todo-${todoObject.id}`);
 
     if (todoObject.isCompleted) {
+        // buat button undo
         const undoButton = document.createElement('button');
+        // nambahin class undo button
         undoButton.classList.add('undo-button');
      
+        // nambahin event click undo button
         undoButton.addEventListener('click', function () {
+          // panggil fungsi undo berdasarkan id 
           undoTaskFromCompleted(todoObject.id);
         });
      
+        // buat button trash
         const trashButton = document.createElement('button');
+        // nambahin class css trash button
         trashButton.classList.add('trash-button');
-     
+          // panggil fungsi delete berdasarkan id 
         trashButton.addEventListener('click', function () {
           removeTaskFromCompleted(todoObject.id);
         });
      
+        // append tombolnya ke container
         container.append(undoButton, trashButton);
+
       } else {
+        // buat button check
         const checkButton = document.createElement('button');
+        // nambahin class css check button
         checkButton.classList.add('check-button');
         
+          // panggil fungsi add button ke completed berdasarkan id 
         checkButton.addEventListener('click', function () {
           addTaskToCompleted(todoObject.id);
         });
         
+        // append tombolnya ke container
         container.append(checkButton);
       }
 
@@ -163,7 +175,6 @@ function findTodoIndex(todoId) {
         return index;
       }
     }
-   
     return -1;
 }
 
